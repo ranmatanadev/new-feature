@@ -1,117 +1,106 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useEffect, useState, useCallback} from 'react';
+import {View} from 'react-native';
+import ViewPager from '@react-native-community/viewpager';
+import {PostProvider} from './src/Post';
+import HeaderFeed from './src/HeaderFeed';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const posts = [
+  {
+    id: 0,
+    businessId: 12,
+    type: 0,
+    name: 'מועדון השלוותא',
+    description:
+      'יום שישי הכי חם שהולך להיות, אתם מוכנים??? 21+ בר אלכוהול, DJ SHARP על העמדה ועוד המון בלאגן.',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx03QYq0zf_ACJPQwE0agr7IayNxWeWvO25Q&usqp=CAU',
+    timeArrived: '12:30',
+    likes: 9444,
+    comments: 6340,
+    arriving: 111,
+    photo:
+      'https://assets.traveltriangle.com/blog/wp-content/uploads/2018/05/ibiza-opening-parties-20171.jpg',
+    liked: true,
+  },
+  {
+    id: 1,
+    businessId: 13,
+    type: 0,
+    name: 'מועדון הלייט האוס',
+    description:
+      'יום שישי הכי חם שהולך להיות, אתם מוכנים??? 21+ בר אלכוהול, DJ SHARP על העמדה ועוד המון בלאגן.',
+    logo: 'https://img.freepik.com/premium-vector/light-house-logo-template-with-white-background_327390-128.jpg?w=2000',
+    timeArrived: '12:30',
+    likes: 444,
+    comments: 340,
+    arriving: 11,
+    photo: 'https://m.media-amazon.com/images/I/5184+Ql-PiL._SL500_.jpg',
+    liked: false,
+  },
+];
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
+  const [activeParent, setActiveParent] = useState(0);
+  const [activeChild, setActiveChild] = useState(0);
+  const [play, setPlay] = useState(true);
+  const [headerShown, setHeaderShown] = useState(true);
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const setHeaderShownCallback = useCallback(val => {
+    setHeaderShown(val);
+  }, []);
+
+  const setPlayCallback = useCallback(() => {
+    const innerPlay = !play;
+    if (innerPlay) {
+      alert('play');
+    } else {
+      alert('stop');
+    }
+    setPlay(!play);
+  }, [play]);
+
+  useEffect(() => {
+    setHeaderShown(true);
+  }, [activeParent]);
+
+  useEffect(() => {
+    if (activeChild === 0) {
+      setHeaderShown(true);
+    }
+  }, [activeChild]);
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={[{flex: 1, backgroundColor: 'white'}]}>
+      {headerShown && <HeaderFeed item={posts[activeParent]} />}
+      <ViewPager
+        onPageSelected={e => {
+          setActiveParent(e.nativeEvent.position);
+        }}
+        orientation="vertical"
+        style={{flex: 1}}
+        initialPage={0}
+        scrollEnabled={activeChild !== 1}>
+        {posts.map((item, index) => (
+          <View
+            key={item?.id}
+            onTouchEnd={() => {
+              if (activeParent === index && activeChild === 0) {
+                setHeaderShown(true);
+              }
+            }}>
+            <PostProvider
+              setHeaderShown={setHeaderShownCallback}
+              item={item}
+              setPlay={setPlayCallback}
+              activeParent={activeParent}
+              setActiveParent={setActiveParent}
+              activeChild={activeChild}
+              setActiveChild={setActiveChild}
+            />
+          </View>
+        ))}
+      </ViewPager>
     </View>
   );
 };
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;

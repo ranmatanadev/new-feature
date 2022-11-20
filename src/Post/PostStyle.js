@@ -1,0 +1,153 @@
+import {Dimensions, StyleSheet} from 'react-native';
+
+const {height, width} = Dimensions.get('screen');
+
+export default StyleSheet.create({
+  topLinearGradient__Post: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '70%',
+  },
+  bottomLinearGradient__Post: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: '50%',
+  },
+  container__Post: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    width,
+    height,
+    zIndex: -1,
+  },
+  item__Post: {
+    height,
+    width,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    alignItems: 'stretch',
+    bottom: 0,
+    right: 0,
+    zIndex: 1,
+  },
+  container_body__Post: {
+    width,
+    height: height / 2,
+    zIndex: 1,
+    position: 'absolute',
+    bottom: 0,
+    flex: 1,
+  },
+  header__Post: {
+    flex: 0.2,
+    width,
+  },
+  name_post: {
+    textAlign: 'right',
+    paddingRight: 20,
+
+    fontStyle: 'normal',
+    fontWeight: '400',
+    fontSize: 38,
+    color: 'white',
+    textShadowColor: 'rgba(0, 0, 0, 0.15)',
+    textShadowOffset: {width: 0, height: 2},
+    textShadowRadius: 0.57,
+  },
+  details_title: {
+    fontStyle: 'normal',
+    fontWeight: '400',
+    fontSize: 14,
+    color: 'white',
+    textShadowColor: 'rgba(0, 0, 0, 0.15)',
+    textShadowOffset: {width: 0, height: 2},
+    textShadowRadius: 0.57,
+  },
+  container_logo_name__Post: {
+    flex: 0.25,
+    flexDirection: 'row',
+    width,
+  },
+  logo_post_container__Post: {
+    width: width * 0.4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.57,
+    shadowRadius: 20,
+    shadowColor: 'black',
+  },
+  logo_post__Post: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+  name_container__Post: {
+    width: width * 0.6,
+  },
+  details_container__Post: {
+    flex: 0.25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  order_container__Post: {
+    width: '30%',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    alignSelf: 'center',
+  },
+  order__Post: {
+    height: 40,
+    width: 90,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    borderColor: 'white',
+    borderWidth: 2,
+  },
+  order_text__Post: {
+    textAlign: 'right',
+
+    fontStyle: 'normal',
+    fontWeight: '400',
+    fontSize: 14,
+    color: 'white',
+    textShadowColor: 'rgba(0, 0, 0, 0.15)',
+    textShadowOffset: {width: 0, height: 2},
+    textShadowRadius: 0.57,
+  },
+  desc_container__Post: {
+    width: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    padding: 15,
+  },
+  desc_text__Post: {
+    textAlign: 'right',
+
+    fontStyle: 'normal',
+    fontWeight: '500',
+    color: 'white',
+    textShadowColor: 'rgba(0, 0, 0, 0.15)',
+    textShadowOffset: {width: 0, height: 2},
+    textShadowRadius: 0.57,
+  },
+  values_container__Post: {
+    flex: 0.2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  values_data__Post: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: width * 0.25,
+  },
+});
